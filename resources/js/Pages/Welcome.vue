@@ -102,9 +102,16 @@ const formatPrice = (price) => {
                         :key="product.id"
                         class="group relative bg-[#121215] border border-white/5 rounded-3xl overflow-hidden transition-all duration-500 hover:border-purple-500/50 hover:shadow-2xl hover:shadow-purple-500/10 hover:-translate-y-1 ring-1 ring-transparent hover:ring-purple-500/20"
                     >
-                        <!-- Image Container (Placeholder for now) -->
+                        <!-- Image Container -->
                         <div class="aspect-[4/3] bg-gradient-to-br from-gray-800 to-gray-900 overflow-hidden relative">
-                            <div class="absolute inset-0 flex items-center justify-center text-white/5 transform group-hover:scale-110 transition-transform duration-700">
+                            <template v-if="product.images && product.images.length > 0">
+                                <img 
+                                    :src="`/${product.images[0].file_path}`" 
+                                    :alt="product.title"
+                                    class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                                />
+                            </template>
+                            <div v-else class="absolute inset-0 flex items-center justify-center text-white/5 transform group-hover:scale-110 transition-transform duration-700">
                                 <svg class="size-32" fill="currentColor" viewBox="0 0 24 24"><path d="M21 19V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
                             </div>
                             <!-- Price Badge -->
