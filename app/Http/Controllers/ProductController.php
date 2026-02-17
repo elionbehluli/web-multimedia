@@ -17,4 +17,11 @@ class ProductController extends Controller
             'canRegister' => Route::has('register'),
         ]);
     }
+
+    public function show(Product $product)
+    {
+        return Inertia::render('ProductDetail', [
+            'product' => $product->load('images'),
+        ]);
+    }
 }

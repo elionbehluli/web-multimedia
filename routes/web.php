@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', [App\Http\Controllers\ProductController::class, 'index']);
+Route::get('/products/{product}', [App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
 Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.products.index');
 Route::get('/admin/products/{product}', [App\Http\Controllers\AdminController::class, 'show'])->name('admin.products.show');
 Route::post('/admin/products/{product}/images', [App\Http\Controllers\AdminController::class, 'storeImage'])->name('admin.products.images.store');

@@ -134,9 +134,12 @@ const formatPrice = (price) => {
                             </p>
                             
                             <div class="flex items-center justify-between mt-auto">
-                                <button class="w-full py-3 bg-white/5 text-white/80 text-sm font-bold rounded-2xl border border-white/10 hover:bg-white hover:text-black transition-all">
+                                <Link 
+                                    :href="route('products.show', product.id)"
+                                    class="w-full py-3 bg-white/5 text-white/80 text-sm font-bold rounded-2xl border border-white/10 hover:bg-white hover:text-black transition-all text-center"
+                                >
                                     View Details
-                                </button>
+                                </Link>
                             </div>
                         </div>
                     </div>
