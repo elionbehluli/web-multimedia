@@ -1,5 +1,7 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
+import PixiBackground from '@/Components/PixiBackground.vue';
+import PixiProductImage from '@/Components/PixiProductImage.vue';
 
 defineProps({
     products: {
@@ -26,6 +28,9 @@ const formatPrice = (price) => {
     <Head title="Premium Product Showcase" />
     
     <div class="min-h-screen bg-[#0a0a0c] text-white selection:bg-purple-600 selection:text-white font-sans">
+        <!-- PixiJS Animated Background -->
+        <PixiBackground />
+
         <!-- Modern Background Gradient -->
         <div class="fixed inset-0 overflow-hidden pointer-events-none">
             <div class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-purple-900/20 blur-[120px] rounded-full"></div>
@@ -105,17 +110,16 @@ const formatPrice = (price) => {
                         <!-- Image Container -->
                         <div class="aspect-[4/3] bg-gradient-to-br from-gray-800 to-gray-900 overflow-hidden relative">
                             <template v-if="product.images && product.images.length > 0">
-                                <img 
+                                <PixiProductImage 
                                     :src="`/${product.images[0].file_path}`" 
                                     :alt="product.title"
-                                    class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
                                 />
                             </template>
-                            <div v-else class="absolute inset-0 flex items-center justify-center text-white/5 transform group-hover:scale-110 transition-transform duration-700">
+                            <div v-else class="absolute inset-0 flex items-center justify-center text-white/5">
                                 <svg class="size-32" fill="currentColor" viewBox="0 0 24 24"><path d="M21 19V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
                             </div>
                             <!-- Price Badge -->
-                            <div class="absolute top-4 right-4 px-3 py-1.5 bg-black/60 backdrop-blur-md rounded-full border border-white/10 text-xs font-bold text-white shadow-xl">
+                            <div class="absolute top-4 right-4 px-3 py-1.5 bg-black/60 backdrop-blur-md rounded-full border border-white/10 text-xs font-bold text-white shadow-xl z-10 pointer-events-none">
                                 {{ formatPrice(product.price) }}
                             </div>
                         </div>
