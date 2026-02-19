@@ -12,6 +12,27 @@ const props = defineProps({
 
 const currentSlide = ref(0);
 const touchStartX = ref(0);
+const isHoveringZoom = ref(false);
+const zoomBackgroundPosition = ref('0% 0%');
+const zoomContainer = ref(null);
+
+const handleMouseEnter = () => {
+    isHoveringZoom.value = true;
+};
+
+const handleMouseLeave = () => {
+    isHoveringZoom.value = false;
+};
+
+const handleMouseMove = (e) => {
+    if (!zoomContainer.value) return;
+    
+    const rect = zoomContainer.value.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    
+    zoomBackgroundPosition.value = `${x}% ${y}%`;
+};
 
 const nextSlide = () => {
     if (props.product.images.length > 0) {
@@ -72,9 +93,13 @@ const formatPrice = (price) => {
                     <!-- LEFT: Image Slider -->
                     <div class="relative group">
                         <div 
-                            class="aspect-[4/5] bg-[#121215] rounded-[2rem] overflow-hidden border border-white/5 shadow-2xl relative"
+                            ref="zoomContainer"
+                            class="aspect-square max-w-sm mx-auto bg-[#121215] rounded-[2rem] overflow-hidden border border-white/5 shadow-2xl relative cursor-zoom-in"
                             @touchstart="handleTouchStart"
                             @touchend="handleTouchEnd"
+                            @mouseenter="handleMouseEnter"
+                            @mouseleave="handleMouseLeave"
+                            @mousemove="handleMouseMove"
                         >
                             <!-- Images -->
                             <div 
@@ -128,8 +153,21 @@ const formatPrice = (price) => {
                         </div>
 
                         <!-- Floating Badge -->
-                        <div class="absolute -top-6 -right-6 px-6 py-4 bg-gradient-to-tr from-purple-600 to-blue-500 rounded-3xl shadow-2xl shadow-purple-500/30 transform rotate-12 group-hover:rotate-0 transition-transform duration-500">
+                        <div class="absolute -top-6 -right-6 px-6 py-4 bg-gradient-to-tr from-purple-600 to-blue-500 rounded-3xl shadow-2xl shadow-purple-500/30 transform rotate-12 group-hover:rotate-0 transition-transform duration-500 z-30">
                             <span class="text-2xl font-black">{{ formatPrice(product.price) }}</span>
+                        </div>
+
+                        <!-- Zoom Lens Circle -->
+                        <div 
+                            v-if="isHoveringZoom && product.images.length > 0"
+                            class="fixed top-1/2 -translate-y-1/2 left-[calc(50%+2rem)] w-[600px] h-[600px] rounded-full border-4 border-purple-500/50 shadow-2xl z-[100] bg-no-repeat pointer-events-none hidden lg:block overflow-hidden"
+                            :style="{
+                                backgroundImage: `url(/${product.images[currentSlide].file_path})`,
+                                backgroundPosition: zoomBackgroundPosition,
+                                backgroundSize: '250%'
+                            }"
+                        >
+                            <div class="absolute inset-0 ring-inset ring-1 ring-white/20 rounded-full"></div>
                         </div>
                     </div>
 
