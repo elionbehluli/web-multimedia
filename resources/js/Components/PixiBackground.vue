@@ -24,7 +24,7 @@ onMounted(async () => {
     // Create a simple particle texture (a soft circle)
     const graphics = new PIXI.Graphics()
         .circle(0, 0, 4)
-        .fill({ color: 0xffffff, alpha: 0.3 });
+        .fill({ color: 0x10b981, alpha: 0.15 });
     
     const texture = app.renderer.generateTexture({
         target: graphics,

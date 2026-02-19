@@ -143,7 +143,7 @@ onUnmounted(() => {
 
 <template>
     <div 
-        class="relative w-full h-full cursor-pointer overflow-hidden bg-gray-900"
+        class="relative w-full h-full cursor-pointer overflow-hidden bg-gray-100"
         @mouseenter="onMouseEnter"
         @mouseleave="onMouseLeave"
     >
